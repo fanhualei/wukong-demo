@@ -1,4 +1,6 @@
 
+
+
 //针对所有project的配置，包含根项目，除此之外还有subprojects 和 project
 allprojects {
     group = 'com.redhtc.wukong'
@@ -9,12 +11,17 @@ allprojects {
 buildscript {
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "http://127.0.0.1:8081/repository/wukong/" }
+        maven { url "${mavenRepo}" }
     }
     dependencies {
         classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.4.4"
+        classpath "com.redhtc.wukong:wukong-gradle-plug:2.0.0.RELEASE"
+        classpath "com.redhtc.wukong:wukong-boot-gen:2.0.0.RELEASE"
     }
 }
+
+apply plugin: 'com.wukong.gradle'
+
 
 subprojects {
 
@@ -42,7 +49,7 @@ subprojects {
         mavenLocal()
         mavenCentral()
 
-        maven { url "http://127.0.0.1:8081/repository/wukong/"}
+        maven { url "${mavenRepo}"}
 
 
     }
@@ -90,4 +97,13 @@ subprojects {
         options.compilerArgs << "-Xlint:deprecation"
     }
 
+}
+
+
+wukong{
+    genCodes {
+        configFile "${project.getRootDir()}/plugin/config.properties"
+        jdbcJarPath "${project.getRootDir()}/plugin/mysql-connector-java-8.0.19.jar"
+        basePath   "${project.getRootDir().path}"
+    }
 }

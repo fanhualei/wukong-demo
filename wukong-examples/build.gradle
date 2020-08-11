@@ -55,22 +55,3 @@ bootWar {
     archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
     //launchScript()
 }
-
-
-//task wukongGen{
-//    println("ddddddddddddddddd")
-//}
-
-//wukong{
-//    generatorCodes{
-//        xiaomao = 'ssss'
-//    }
-//}
-
-//myExtension {
-//    mExtensionName  "Hello Plugin"
-////    innerExtension{//对象类型
-////        //extensionName "innerExtension"
-////        //title "title"
-////    }
-//}
