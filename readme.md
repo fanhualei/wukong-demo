@@ -168,7 +168,17 @@ wukong:
 
 ## 2.5 自动化文档
 
+
+
+### ① API接口文档
+
 使用了spring doc 来输出文档。
+
+
+
+### ② 数据库文档
+
+![](reference/imgs/database.png)
 
 
 
