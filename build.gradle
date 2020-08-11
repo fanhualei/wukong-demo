@@ -1,6 +1,3 @@
-
-
-
 //针对所有project的配置，包含根项目，除此之外还有subprojects 和 project
 allprojects {
     group = 'com.redhtc.wukong'
@@ -15,8 +12,8 @@ buildscript {
     }
     dependencies {
         classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.4.4"
-        classpath "com.redhtc.wukong:wukong-gradle-plug:2.0.0.RELEASE"
-        classpath "com.redhtc.wukong:wukong-boot-gen:2.0.0.RELEASE"
+        classpath "com.redhtc.wukong:wukong-gradle-plug:${wukongVersion}"
+        classpath "com.redhtc.wukong:wukong-boot-gen:${wukongVersion}"
     }
 }
 
@@ -24,14 +21,11 @@ apply plugin: 'com.wukong.gradle'
 
 
 subprojects {
-
     apply plugin: 'java'
     apply plugin:'idea'
     apply plugin: "com.github.spotbugs"
 
-    // tps://maven.aliyun.com/mvn/guide
     // 阿里镜像仓库的地址，正常情况下不用添加下面这些地址，但是有是否发现有些库无法下载，所以我就添加了4个
-
     repositories {
         maven {
             url 'https://maven.aliyun.com/repository/public/'
@@ -45,16 +39,11 @@ subprojects {
         maven {
             url 'https://maven.aliyun.com/repository/google'
         }
-
         mavenLocal()
         mavenCentral()
-
         maven { url "${mavenRepo}"}
-
-
     }
     //jdk版本
-    //sourceCompatibility = '1.8'
     sourceCompatibility = '11'
 
     dependencies {
@@ -70,7 +59,6 @@ subprojects {
     }
     processTestResources.dependsOn copyTestResources
 
-    // copy the resources file to class dir
     task cpRes(type:Copy){
         println "copy resource files"
         from sourceSets.main.resources

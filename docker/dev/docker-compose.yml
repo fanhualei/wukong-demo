@@ -1,0 +1,66 @@
+version: '3'
+services:
+
+  #mysql
+  mysql:
+    hostname: mysql
+    build: ./mysql
+    ports:
+      - 3306:3306 
+    restart: always
+    
+    volumes:
+      - ${DATA_PATH}/mysql/conf:/etc/mysql/conf.d
+      - ${DATA_PATH}/mysql/data:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      MYSQL_ROOT_PASSWORD: Mysql@root123
+      
+  #redis
+  redis:
+    hostname: redis
+    build: ./redis
+    ports:
+      - 6379:6379
+    restart: always
+    # 开启持久化，并设置密码
+    command: redis-server --appendonly yes --requirepass "redis123"
+
+    volumes:
+      - ${DATA_PATH}/redis/data:/data
+      - /etc/localtime:/etc/localtime:ro
+
+
+  #rabbitmq
+  rabbitmq:
+    hostname: rabbitmq
+    build: ./rabbitmq
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: fanhualei
+
+      # RABBITMQ_SSL_CACERTFILE: /cert/ca_certificate.pem
+      # RABBITMQ_SSL_CERTFILE: /cert/server_certificate.pem
+      # RABBITMQ_SSL_KEYFILE: /cert/server_key.pem
+      #客户端不需要带证书
+      # RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT: 'false'
+      # RABBITMQ_SSL_VERIFY: 'verify_none'
+
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DATA_PATH}/rabbitmq/data:/var/lib/rabbitmq
+    ports:
+      - "15672:15672"
+      - "15671:15671"
+      - "1883:1883"
+      - "8883:8883"
+
+
+
+  #mosquitto 主要是为了测试 rabbitmq的客户端
+  mosquitto:
+    hostname: mosquitto
+    image: eclipse-mosquitto:1.6.10
+    restart: always
+

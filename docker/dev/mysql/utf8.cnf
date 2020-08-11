@@ -1,0 +1,10 @@
+
+[mysqld]
+
+character-set-server = utf8
+init_connect='SET NAMES utf8'
+
+
+[client]
+default-character-set=utf8
+
