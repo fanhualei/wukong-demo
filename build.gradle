@@ -1,0 +1,93 @@
+
+//针对所有project的配置，包含根项目，除此之外还有subprojects 和 project
+allprojects {
+    group = 'com.redhtc.wukong'
+    version = '2.0.0.RELEASE'
+}
+
+
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "http://127.0.0.1:8081/repository/wukong/" }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.4.4"
+    }
+}
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin:'idea'
+    apply plugin: "com.github.spotbugs"
+
+    // tps://maven.aliyun.com/mvn/guide
+    // 阿里镜像仓库的地址，正常情况下不用添加下面这些地址，但是有是否发现有些库无法下载，所以我就添加了4个
+
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/spring/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/spring-plugin'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/google'
+        }
+
+        mavenLocal()
+        mavenCentral()
+
+        maven { url "http://127.0.0.1:8081/repository/wukong/"}
+
+
+    }
+    //jdk版本
+    //sourceCompatibility = '1.8'
+    sourceCompatibility = '11'
+
+    dependencies {
+        implementation "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    }
+
+    task copyTestResources(type: Copy) {
+        println "copy test resource files"
+        from sourceSets.test.resources
+        into sourceSets.test.java.outputDir
+        processResources.exclude("**/*.*")
+    }
+    processTestResources.dependsOn copyTestResources
+
+    // copy the resources file to class dir
+    task cpRes(type:Copy){
+        println "copy resource files"
+        from sourceSets.main.resources
+        into sourceSets.main.java.outputDir
+        processResources.exclude("**/*.*")
+    }
+    processResources.dependsOn(cpRes)
+
+    spotbugsMain {
+        spotbugs {
+            ignoreFailures = true
+        }
+        reports {
+            html {
+                enabled = true
+                stylesheet = 'fancy-hist.xsl'
+            }
+        }
+    }
+
+    compileJava {
+        //下面的注释会提示出详细的错误在那个类中
+        //options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        options.compilerArgs << "-Xlint:deprecation"
+    }
+
+}

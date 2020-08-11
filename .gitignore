@@ -1,0 +1,8 @@
+*.iml
+.idea/
+log/
+.gradle
+.gradletasknamecache
+build
+build.log
+webapp/WEB-INF/

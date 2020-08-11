@@ -1,0 +1,54 @@
+mybatis:
+    configuration:
+        ### 开启骆峰对应规则
+        map-underscore-to-camel-case: true
+context:
+    initializer:
+        classes: com.wukong.core.initializer.CheckDbInitializer
+#server:
+#    port: 9090
+spring:
+    jackson:
+        #日期期时格式设置置
+        date-format: yyyy-MM-dd HH:mm:ss
+        #时区设置
+        time-zone: GMT+8
+    ### 多语言
+    messages:
+        #设置国际化配置文件存放在classpath:/i18n目录下
+        basename: i18n/messages
+        #设定message bundles编码方式，默认为UTF-8
+        encoding: UTF-8
+    favicon:
+        #关闭Favicon
+        enabled: false
+    mvc:
+        # dispatch-options-request: true
+        static-path-pattern: /**
+    profiles:
+        active: sdb,flyway
+    redis:
+        password: redis123
+    resources:
+        static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${wukong.storage.upload-path}
+
+wukong:
+    core:
+        debug-pwd: fanaaa
+        sql-backup-shell-path: /opt/wk/backsql.sh
+    security:
+        #配置不受权限控制的url
+        permiturls: /example/**,/*,/files/**,/test/**,/log/**,/imgs/**,/author/public/**,/v3/**,/swagger-ui/**,/swagger-resources/**
+    storage:
+        # 推荐使用绝对路径,放在工程目录中，例如：/opt/wk-example/upload
+        upload-path: /home/fan/01-java/wukong-framework/log/upload
+    auto-fill-date-column:
+        enabled: true
+        columns: gmt_modified,gmt_test
+    swagger:
+        enable: false
+        basePackage: com.wukong.examples.controller
+    id-util:
+        snowflake:
+            worker-id: 2
+

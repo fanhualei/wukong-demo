@@ -1,0 +1,8 @@
+spring:
+    flyway:
+        enabled: true
+        url: jdbc:mysql://127.0.0.1:3306/wk_example?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+        user: root
+        password: Mysql@root123
+        driver: com.mysql.cj.jdbc.Driver
+        locations: classpath:db/migration # 指定sql文件存放的目录

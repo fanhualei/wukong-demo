@@ -1,0 +1,76 @@
+
+plugins {
+    id "org.springframework.boot" version "${springBootVersion}"
+    id "io.spring.dependency-management" version "${springDependencyManagementVersion}"
+    id "org.asciidoctor.jvm.convert" version "${asciidoctorVersion}"  // 转换插件
+    id "war"
+}
+
+
+description = "wukong-examples"
+
+dependencies {
+    implementation "com.redhtc.wukong:wukong-boot-core:${wukongVersion}"
+    implementation "com.redhtc.wukong:wukong-boot-security:${wukongVersion}"
+
+    //将tomcat打包到war文件中
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+
+    //数据库版本控制
+    implementation "org.flywaydb:flyway-core:${flywayVersion}"
+    //------------------test------------------------
+    testImplementation "com.redhtc.wukong:wukong-boot-testNg:${wukongVersion}"
+}
+
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+}
+
+
+test {
+    //enabled=false
+    outputs.dir snippetsDir
+    useTestNG()
+}
+
+//会自动拼接build/generated-snippets下的文件 到build/generated-snippets/aip.adoc
+//赖test生成generated-snippets
+task genApiAsciidoc(type: JavaExec) {
+    dependsOn test
+    description '合并asciidoc文章片段'
+    classpath sourceSets.test.runtimeClasspath
+    main = 'com.wukong.testNg.GenAipDoc'
+    args snippetsDir.getPath()
+}
+
+//生成index.html
+asciidoctor {
+    baseDir(snippetsDir)
+    dependsOn genApiAsciidoc
+}
+
+//打包的时候生成测试文件，也可以打倒webapp下的static
+bootWar {
+    //dependsOn asciidoctor
+    archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
+    //launchScript()
+}
+
+
+//task wukongGen{
+//    println("ddddddddddddddddd")
+//}
+
+//wukong{
+//    generatorCodes{
+//        xiaomao = 'ssss'
+//    }
+//}
+
+//myExtension {
+//    mExtensionName  "Hello Plugin"
+////    innerExtension{//对象类型
+////        //extensionName "innerExtension"
+////        //title "title"
+////    }
+//}

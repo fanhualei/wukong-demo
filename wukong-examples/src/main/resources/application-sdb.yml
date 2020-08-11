@@ -1,0 +1,11 @@
+#单一数据源的配置文件
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        initial-size: 10
+        max-active: 20
+        max-idle: 8
+        min-idle: 8
+        password: Mysql@root123
+        url: jdbc:mysql://localhost:3306/wk_example?useSSL=false&serverTimezone=Asia/Shanghai
+        username: root

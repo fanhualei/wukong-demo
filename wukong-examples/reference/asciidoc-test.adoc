@@ -1,0 +1,251 @@
+= AsciiDoc Writer's Guide
+:toc: right
+
+
+dddd
+
+=== 换行
+
+Rubies are red, +
+Topazes are blue.
+
+=== 文字
+
+A normal paragraph.
+
+ A sequence of lines that begin with at least one space is a literal paragraph.
+ Literal paragraphs are treated as preformatted text.
+ The text is shown in a fixed-width font
+ and endlines are preserved.
+
+ java is good
+
+
+=== 警告
+
+NOTE: An admonition paragraph draws the reader's attention to
+auxiliary information.Its purpose is determined by the label
+at the beginning of the paragraph.
+
+
+=== 格式化文本
+
+==== 加粗、斜体和等宽字体
+
+_italic phrase_
+
+__i__talic le__tt__ers
+
+*bold phrase*
+
+**b**old le**tt**ers
+
+*_bold italic phrase_*
+
+**__b__**old italic le**__tt__**ers
+
+`monospace phrase` and le``tt``ers
+
+`_monospace italic phrase_` and le``__tt__``ers
+
+`*monospace bold phrase*` and le``**tt**``ers
+
+`*_monospace bold italic phrase_*` and le``**__tt__**``ers
+
+==== 上角标 和 脚注
+^super^script phrase
+
+~sub~script phrase
+
+==== 引号
+
+'`single curved quotes`'
+
+"`double curved quotes`"
+
+Olaf's desk was a mess.
+
+All of the werewolves`' desks were a mess.
+
+Olaf had been with the company since the `'60s.
+
+=== 文档标题
+
+=== 水平线和分页符
+
+'''
+<<<
+
+
+===  列表
+
+==== 基本无序列表
+
+* level 1
+** level 2
+*** level 3
+**** level 4
+***** level 5
+* level 1
+
+
+==== 清单
+- [*] checked
+- [x] also checked
+- [ ] not checked
+-     normal list item
+
+
+====  有序嵌套列表
+[arabic]
+. Step 1
+. Step 2
+.. Step 2a
+.. Step 2b
+. Step 3
+
+==== 多行标签列表
+first term::
+definition of first term
+section term::
+definition of second term
+
+
+====  常见问题以及解答
+[qanda]
+What is Asciidoctor?::
+An implementation of the AsciiDoc processor in Ruby.
+What is the answer to the Ultimate Question?:: 42
+
+
+==== 混合样式列表
+Operating Systems::
+Linux:::
+. Fedora
+* Desktop
+. Ubuntu
+* Desktop
+* Server
+BSD:::
+. FreeBSD
+. NetBSD
+
+Cloud Providers::
+PaaS:::
+. OpenShift
+. CloudBees
+IaaS:::
+. Amazon EC2
+. Rackspace
+
+=== 链接
+http://asciidoctor.org[Asciidoctor]
+
+
+=== 图片
+
+image::http://asciidoctor.org/images/octocat.jpg[GitHub mascot]
+
+
+=== 源码
+
+....
+error: The requested operation returned error: 1954 Forbidden search for defensive operations manual
+absolutely fatal: operation initiation lost in the dodecahedron of doom
+would you like to die again? y/n
+....
+
+[source,ruby]
+----
+require 'sinatra' // <1>
+
+get '/hi' do // <2>
+  "Hello World!" // <3>
+end
+----
+<1> Library import
+<2> URL mapping
+<3> HTTP response body
+
+
+codes
+[[app-listing]]
+[source,ruby]
+.app.rb
+----
+require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end
+----
+
+
+
+=== 更多分隔块
+
+.AsciiDoc history
+****
+AsciiDoc was first released in Nov 2002 by Stuart Rackham.
+It was designed from the start to be a shorthand syntax
+for producing professional documents like DocBook and LaTeX.
+****
+
+
+.Sample document
+====
+Here's a sample AsciiDoc document:
+
+[listing]
+....
+= Title of Document
+Doc Writer
+:toc:
+
+This guide provides...
+....
+
+The document header is useful, but not required.
+====
+
+=== 表格
+表格，带列标题，两行三列内容
+
+[cols="1,1,2", options="header"]
+.Applications
+|===
+|Name
+|Category
+|Description
+
+|Firefox
+|Browser
+|Mozilla Firefox is an open-source web browser.
+It's designed for standards compliance,
+performance, portability.
+
+|Arquillian
+|Testing
+|An innovative and highly extensible testing platform.
+Empowers developers to easily create real, automated tests.
+|===
+
+===  UI 宏
+
+|===
+|Shortcut |Purpose
+
+|kbd:[F11]
+|Toggle fullscreen
+
+|kbd:[Ctrl+T]
+|Open a new tab
+
+|kbd:[Ctrl+Shift+N]
+|New incognito window
+
+|kbd:[Ctrl + +]
+|Increase zoom
+|===
+
+
