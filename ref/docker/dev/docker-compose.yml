@@ -4,7 +4,7 @@ services:
   #mysql
   mysql:
     hostname: mysql
-    build: ./mysql
+    build: mysql
     ports:
       - 3306:3306 
     restart: always
@@ -19,7 +19,7 @@ services:
   #redis
   redis:
     hostname: redis
-    build: ./redis
+    build: redis
     ports:
       - 6379:6379
     restart: always
@@ -34,7 +34,7 @@ services:
   #rabbitmq
   rabbitmq:
     hostname: rabbitmq
-    build: ./rabbitmq
+    build: rabbitmq
     restart: always
     environment:
       RABBITMQ_DEFAULT_USER: guest
