@@ -19,32 +19,40 @@ spring:
         basename: i18n/messages
         #设定message bundles编码方式，默认为UTF-8
         encoding: UTF-8
-    favicon:
-        #关闭Favicon
-        enabled: false
     mvc:
+        #favicon:
+        #关闭Favicon
+        # enabled: false
         # dispatch-options-request: true
         static-path-pattern: /**
+    servlet:
+        multipart:
+            max-file-size: 2MB
+            max-request-size: 20MB
     profiles:
         active: sdb,flyway
     redis:
         password: redis123
-    resources:
-        static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${wukong.storage.upload-path}
+        port: 63791
+    web:
+        resources:
+            static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${wukong.storage.upload-path}
 
 wukong:
     core:
-        debug-pwd: fanaaa
+        debug-pwd: fanwww
         sql-backup-shell-path: /opt/wk/backsql.sh
+        response: antd
     security:
         #配置不受权限控制的url
-        permiturls: /example/**,/*,/files/**,/test/**,/log/**,/imgs/**,/author/public/**,/v3/**,/swagger-ui/**,/swagger-resources/**
+        permiturls: /init/*,/swagger-ui/**,/swagger-resources/**,/v3/**,/hello,/oauth/token,/oauth/getRTree,/oauth/api,/oauth/test,/dev/*,/files/**,/test/**,/admin-log/*,/imgs/**
+        redis-key-flag: example
     storage:
         # 推荐使用绝对路径,放在工程目录中，例如：/opt/wk-example/upload
         upload-path: /home/fan/01-java/wukong-framework/log/upload
     auto-fill-date-column:
         enabled: true
-        columns: gmt_modified,gmt_test
+        columns: gmt_modified
     swagger:
         enable: false
         basePackage: com.wukong.examples.controller
